@@ -1,0 +1,16 @@
+body {
+  position: relative;
+  /*padding-top: 40px;*/
+  background-image: url('../img/orange.png');
+  background-attachment: fixed;
+}
+
+section {
+  padding-top: 30px;
+}
+
+.border-radius(@radius: 5px) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}

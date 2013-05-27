@@ -231,9 +231,8 @@ body {
   line-height: 20px;
   color: #333333;
   background-color: #ffffff;
-  /*!background-image: url('../img/orange.png');*/
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  
 }
 
 a {

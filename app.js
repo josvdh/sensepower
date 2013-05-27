@@ -36,26 +36,24 @@ if ('development' == app.get('env')) {
 app.get('/', index.index);
 
 app.get('/work', function(req, res){
-  var sense, sensor, session_id;
+  var sense, sensor, session_id, factor;
   sensor = req.query.sensor;
   session_id = req.headers.session_id;
   t1 = req.headers.start_time;
   t2 = req.headers.end_time;
+  factor = req.headers.factor;
 
-  console.log(t1,t2);
-  console.log(sensor);
-  sense = new Sense(session_id);
+  sense = new Sense(session_id);  
   return sense.sensorData(sensor, {start_date:t1, end_date:t2, interval:60, per_page:1000}, function(err, resp) {
     var data, datum, i, len, ref;
     console.log('Error:', err);
-    console.log('ikbenhier');
     data = [];
     ref = resp.object.data;
     for (i = 0, len = ref.length; i < len; i++) {
       datum = ref[i];
       data.push({
         date: datum.date * 1000,
-        value: datum.value * 1.2 
+        value: datum.value * factor 
       });
     }
     return res.json(data);

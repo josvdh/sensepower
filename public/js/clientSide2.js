@@ -48,7 +48,7 @@ retrieveSensorTimespan = function(id, cb) {
 plotSensorData = function(id,t1,t2,graph,unit,color) {
   return sense.sensorData(id, {start_date:t1, end_date:t2, interval:60, per_page:1000}, function(err, resp) {
     var data, datum, _i, _len, _ref;
-    data = [];
+    data = [];  
     _ref = resp.object.data;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       datum = _ref[_i];
@@ -84,13 +84,14 @@ getDateTimeInput = function(label) {
   return dtnumber
 };
 
-callSegmentation = function(sensor, cb) {
+callSegmentation = function(sensor, factor, cb) {
   return $.ajax({
     url: '/work?sensor=' + sensor,
     headers: {
       session_id: $.cookie('session_id'),
       start_time: getDateTimeInput('#t1'),
-      end_time: getDateTimeInput('#t2')
+      end_time: getDateTimeInput('#t2'),
+      factor: factor
     }
   }).done(function(data) {
     console.log("ibh");
@@ -98,16 +99,17 @@ callSegmentation = function(sensor, cb) {
       label: 'server data',
       data: data
     });
-    return graph1.redraw();
+    graph1.draw(graph1.data);
+    graph1.setValueRangeAuto();
   });
 };
 
 $(function() {
   graph1 = new links.Graph(document.getElementById('graph_container1'));
-  graph1.draw();
+  graph1.draw([],{start:1368000000000});
 
   graph2 = new links.Graph(document.getElementById('graph_container2'));
-  graph2.draw(); 
+  graph2.draw([],{start:1368000000000}); 
 
   checkForSenseSession();
   $('#authenticate form').submit(function(e) {
@@ -134,8 +136,13 @@ $(function() {
     return false;
   });
 
-  $('#methods').on('click', function() {
-    callSegmentation(328204);
+  $('#methods #method1').on('click', function() {
+    callSegmentation(328204,0.8);
+    return false;
+  });  
+
+  $('#methods #method2').on('click', function() {
+    callSegmentation(328204,1.2);
     return false;
   });  
 
@@ -149,11 +156,10 @@ $(function() {
     return false;
   });  
 
-  $('#parameters form').submit(function(e){
-    console.log("parameters submitted");
+  $('#parameters form').submit(function(e){  
     var t1 = getDateTimeInput('#t1');
     var t2 = getDateTimeInput('#t2');
-    //var id = $('#sensors button').data('id');
+    console.log("parameters submitted:",t1,t2);
     plotSensorData(328204,t1,t2,graph1,'Power','red');
     plotSensorData(318772,t1,t2,graph2,'Temperature','blue');
     return false
