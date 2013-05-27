@@ -1,0 +1,51 @@
+!!! 5
+head
+  title= title
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+  link(rel='stylesheet', href='stylesheets/bootstrap-responsive.min.css')
+  link(rel='stylesheet', href='stylesheets/graph.css')
+  link(rel='stylesheet', href='stylesheets/datetimepicker.css')
+
+body(data-spy="scroll", data-target="#navbar", data-offset="0")
+  
+  .navbar.navbar-inverse.navbar-fixed-top
+    #navbar.navbar-inner
+      .container
+        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.brand(href='#') PowerHouse
+        .nav-collapse.collapse
+          ul.nav
+            li.active
+              a(href='#parameters') Parameters
+            li
+              a(href='#power') Power
+            li
+              a(href='#temperature') Temperature  
+            li
+              a(href='#methods') Methods
+            li
+              a(href='#kpis') KPIs
+
+          #authenticate.form.navbar-form.pull-right
+            input#username.span2(type="text", placeholder="Username")
+            input#password.span2(type="password", placeholder="Password")
+            button.btn(type='submit') Sign in
+
+  .container
+    block content
+
+  script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.3.1/jquery.cookie.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/sugar/1.3.9/sugar.min.js')
+  script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js')
+  script(src='js/clientSide2.js')
+  script(src='js/components/commonsense/lib/commonsense.js')
+  script(src='js/components/JavaScript-MD5/md5.min.js')
+  script(src='js/graph-min.js')
+
+  script(src='js/bootstrap-datetimepicker.min.js')
+  script(src='js/datetime-options.js')
