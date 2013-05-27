@@ -15,23 +15,22 @@ block content
     //-     li.divider
 
     #parameters.row-fluid
-      h2 
-        a(name='parameters') Parameters
+      h2#parameters Parameters
       form
         //- .span3
         //-   select.span12
         //-     option(value='pizza') No sensors
         //-     option(value='salad') Salad
         //-     option(value='pizzasalad') Pizza and Salad
-        .span3
-          #sensors.btn-group
-            button.btn.dropdown-toggle(data-toggle="dropdown")
-              | Sensor
-              &nbsp;
-              span.caret
-            ul.dropdown-menu
-               li
-                 a No sensors
+        //- .span3
+        //-   #sensors.btn-group
+        //-     button.btn.dropdown-toggle(data-toggle="dropdown")
+        //-       | Sensor
+        //-       &nbsp;
+        //-       span.caret
+        //-     ul.dropdown-menu
+        //-        li
+        //-          a No sensors
         .span3
           .controls.input-append.date.form_datetime(data-link-field='dtp_input1')
             input#t1(size='16', type='text', value='', placeholder='2013-01-01 00:00')
@@ -118,24 +117,21 @@ block content
     //-   li.divider
 
     #visualisation.row-fluid
-      h2 
-        a(name='power') Power
+      h2#power(style="padding-top:40px,margin-top:-40px") Power
       #graph_container1
     
     ui.nav.nav-list
       li.divider
 
     #visualisation2.row-fluid
-      h2 
-        a(name='temperature') Temperature
+      h2#temperature(style="padding-top:40px,margin-top:-40px") Temperature
       #graph_container2
     
     ui.nav.nav-list
       li.divider
 
     #methods.span12
-      h2
-        a(name:'methods') Methods
+      h2#methods(style="padding-top:40px,margin-top:-40px") Methods
       button.btn.btn-large.btn-primary.segment Multiply this graph by 1.2
 
     ui.nav.nav-list

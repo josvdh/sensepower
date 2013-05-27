@@ -2,15 +2,15 @@
 head
   title= title
   link(rel='stylesheet', href='/stylesheets/style.css')
-  link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
   link(rel='stylesheet', href='stylesheets/bootstrap-responsive.min.css')
   link(rel='stylesheet', href='stylesheets/graph.css')
   link(rel='stylesheet', href='stylesheets/datetimepicker.css')
 
-body(data-spy="scroll", data-target="#navbar", data-offset="0")
+body(data-spy='scroll', data-target='#navbar', data-offset='40')
   
-  .navbar.navbar-inverse.navbar-fixed-top
-    #navbar.navbar-inner
+  #navbar.navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
       .container
         button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
           span.icon-bar
@@ -19,7 +19,7 @@ body(data-spy="scroll", data-target="#navbar", data-offset="0")
         a.brand(href='#') PowerHouse
         .nav-collapse.collapse
           ul.nav
-            li.active
+            li
               a(href='#parameters') Parameters
             li
               a(href='#power') Power
@@ -29,11 +29,14 @@ body(data-spy="scroll", data-target="#navbar", data-offset="0")
               a(href='#methods') Methods
             li
               a(href='#kpis') KPIs
-
-          #authenticate.form.navbar-form.pull-right
-            input#username.span2(type="text", placeholder="Username")
-            input#password.span2(type="password", placeholder="Password")
-            button.btn(type='submit') Sign in
+          #authenticate
+            form.navbar-form.pull-right
+              input#username.span2(type="text", placeholder="Username")
+              input#password.span2(type="password", placeholder="Password")
+              button.btn(type='submit') Sign in
+          #logout(style='display: none;')
+            form.navbar-form.pull-right
+              button.btn(type='submit') Log Out
 
   .container
     block content
@@ -48,4 +51,5 @@ body(data-spy="scroll", data-target="#navbar", data-offset="0")
   script(src='js/graph-min.js')
 
   script(src='js/bootstrap-datetimepicker.min.js')
+  script(src='js/bootstrap-scrollspy.js')
   script(src='js/datetime-options.js')

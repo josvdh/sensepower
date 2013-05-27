@@ -1,47 +1,21 @@
-var callSegmentation, checkForSenseSession, fillSensors, graph, plotSensorData, retrieveSensorTimespan, sense, showSensors;
+var callSegmentation, checkForSenseSession, fillSensors, plotSensorData, retrieveSensorTimespan, sense, showSensors;
 
 sense = null;
 
-graph = null;
+var graph1 = null;
+var graph2 = null;
 
 checkForSenseSession = function() {
   if ($.cookie('session_id') != null) {
-    $('#authenticate form button').html('Authenticated');
+    $('#authenticate').hide();
+    $('#logout').show();
+    //$('#authenticate form button').html('Authenticated');
     $('#authenticate form .username').val($.cookie('username'));
     sense = new Sense($.cookie('session_id'));
-    return showSensors();
+    return false
   } else {
     return sense = new Sense;
   }
-};
-
-showSensors = function(list) {
-  return fillSensors(list, function() {
-    return $('#sensors').fadeIn();
-  });
-};
-
-fillSensors = function(list, cb) {
-  if (typeof list === 'function') {
-    cb = list;
-    list = null;
-  }
-  list || (list = '#sensors ul');
-  return sense.sensors(function(err, resp) {
-    var list_html, sensor, sorted_sensors, _i, _len;
-    sorted_sensors = resp.object.sensors.sortBy(function(sensor) {
-      return sensor.display_name;
-    });
-    list_html = '';
-    for (_i = 0, _len = sorted_sensors.length; _i < _len; _i++) {
-      sensor = sorted_sensors[_i];
-      list_html += "<li><a href='' data-id='" + sensor.id + "' data-display='" + sensor.display_name + "'>" + sensor.display_name + " (" + sensor.id + ")</a></li>";
-    }
-    $(list).html(list_html);
-    if (cb != null) {
-      return cb();
-    }
-  });
 };
 
 retrieveSensorTimespan = function(id, cb) {
@@ -71,7 +45,7 @@ retrieveSensorTimespan = function(id, cb) {
   });
 };
 
-plotSensorData = function(id,t1,t2) {
+plotSensorData = function(id,t1,t2,graph,unit,color) {
   return sense.sensorData(id, {start_date:t1, end_date:t2, interval:60, per_page:1000}, function(err, resp) {
     var data, datum, _i, _len, _ref;
     data = [];
@@ -85,10 +59,21 @@ plotSensorData = function(id,t1,t2) {
     }
     graph.draw([
       {
-        label: 'Power',
+        label: unit,
         data: data
       }
-    ]);
+    ],
+      {
+        line : {
+          color: color
+        },
+        min: t1*1000, 
+        max: t2*1000,
+        legend : {
+          width: "130px"
+        }
+      });
+    graph.setValueRangeAuto();
     return $('#actions').fadeIn();
   });
 };
@@ -108,21 +93,24 @@ callSegmentation = function(sensor, cb) {
       end_time: getDateTimeInput('#t2')
     }
   }).done(function(data) {
-    graph.data.push({
+    console.log("ibh");
+    graph1.data.push({
       label: 'server data',
       data: data
     });
-    return graph.redraw();
+    return graph1.redraw();
   });
 };
 
 $(function() {
-  var container = document.getElementById('graph_container');
-  graph = new links.Graph(container);
+  graph1 = new links.Graph(document.getElementById('graph_container1'));
+  graph1.draw();
+
+  graph2 = new links.Graph(document.getElementById('graph_container2'));
+  graph2.draw(); 
+
   checkForSenseSession();
-  
-  $('#navbar form').submit(function(e) {
-    console.log("hello");
+  $('#authenticate form').submit(function(e) {
     var button, password, username;
     e.preventDefault();
     button = $(this).find('button');
@@ -130,11 +118,11 @@ $(function() {
     username = $('#username').val();
     password = md5($('#password').val());
     return sense.createSession(username, password, function(err, resp) {
-      // button.removeAttr('disabled').html('Sign Out');
-      $('#authenticate').toggle();
-
+      button.removeAttr('disabled').html('Sign Out');
       $.cookie('username', username);
       $.cookie('session_id', resp.object.session_id);
+      $('#authenticate').toggle();
+      $('#logout').toggle();
       return showSensors();
     });
   });
@@ -146,16 +134,28 @@ $(function() {
     return false;
   });
 
-  $('#actions .segment').on('click', function() {
-    callSegmentation($('#sensors button').data('id'));
+  $('#methods').on('click', function() {
+    callSegmentation(328204);
+    return false;
+  });  
+
+  $('#logout form').on('click', function() {
+    console.log('logout');
+    sense.deleteSession();
+    $.removeCookie('session_id');
+    $.removeCookie('username');
+    $('#authenticate').toggle();
+    $('#logout').toggle();
     return false;
   });  
 
   $('#parameters form').submit(function(e){
+    console.log("parameters submitted");
     var t1 = getDateTimeInput('#t1');
     var t2 = getDateTimeInput('#t2');
-    var id = $('#sensors button').data('id');
-    plotSensorData(id,t1,t2);
+    //var id = $('#sensors button').data('id');
+    plotSensorData(328204,t1,t2,graph1,'Power','red');
+    plotSensorData(318772,t1,t2,graph2,'Temperature','blue');
     return false
   });
 
