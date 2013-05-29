@@ -46,7 +46,7 @@ retrieveSensorTimespan = function(id, cb) {
 };
 
 plotSensorData = function(id,t1,t2,graph,unit,color) {
-  return sense.sensorData(id, {start_date:t1, end_date:t2, interval:60, per_page:1000}, function(err, resp) {
+  return sense.sensorData(id, {start_date:t1, end_date:t2, interval:10, per_page:1000}, function(err, resp) {
     var data, datum, _i, _len, _ref;
     data = [];  
     _ref = resp.object.data;

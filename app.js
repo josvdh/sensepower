@@ -44,7 +44,7 @@ app.get('/work', function(req, res){
   factor = req.headers.factor;
 
   sense = new Sense(session_id);  
-  return sense.sensorData(sensor, {start_date:t1, end_date:t2, interval:60, per_page:1000}, function(err, resp) {
+  return sense.sensorData(sensor, {start_date:t1, end_date:t2, interval:10, per_page:1000}, function(err, resp) {
     var data, datum, i, len, ref;
     console.log('Error:', err);
     data = [];
