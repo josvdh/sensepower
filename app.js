@@ -46,7 +46,6 @@ app.get('/work', function(req, res){
   sense = new Sense(session_id);  
   return sense.sensorData(sensor, {start_date:t1, end_date:t2, interval:10, per_page:1000}, function(err, resp) {
     var data, datum, i, len, ref;
-    console.log('Error:', err);
     data = [];
     ref = resp.object.data;
     for (i = 0, len = ref.length; i < len; i++) {

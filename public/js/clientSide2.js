@@ -30,56 +30,6 @@ showSensors = function() {
   });
 };
 
-// showSensors = function(device, list, cb) {
-//   if (typeof list === 'function') {
-//     cb = list;
-//     list = null;
-//   }
-//   list || (list = '#sensors ul');
-//   return sense.deviceSensors(device, function(err, resp) {
-//     var list_html, sensor, sorted_sensors, _i, _len;
-//     sorted_sensors = resp.object.sensors.sortBy(function(sensor) {
-//       return sensor.display_name;
-//     });
-//     list_html = '';
-//     for (_i = 0, _len = sorted_sensors.length; _i < _len; _i++) {
-//       sensor = sorted_sensors[_i];
-//       list_html += "<li><a href='' data-id='" + sensor.id + "' data-display='" + sensor.display_name + "'>" + sensor.display_name + " (" + sensor.id + ")</a></li>";
-//     }
-//     $(list).html(list_html);
-//     if (cb != null) {
-//       return cb();
-//     }
-//   });
-// };
-
-retrieveSensorTimespan = function(id, cb) {
-  var first_datapoint_call, last_datapoint_call;
-  first_datapoint_call = function() {
-    var defer;
-    defer = $.Deferred();
-    sense.sensorData(id, {
-      per_page: 1
-    }, function(err, resp) {
-      return defer.resolve(resp.object.data[0]);
-    });
-    return defer.promise();
-  };
-  last_datapoint_call = function() {
-    var defer;
-    defer = $.Deferred();
-    sense.sensorData(id, {
-      last: true
-    }, function(err, resp) {
-      return defer.resolve(resp.object.data[0]);
-    });
-    return defer.promise();
-  };
-  return $.when(first_datapoint_call(), last_datapoint_call()).done(function(first, last) {
-    return console.log('All data received', first, last);
-  });
-};
-
 plotSensorData = function(id,t1,t2,graph) {
   var samples = 1000;
   var st = Math.ceil((t2-t1)/samples);
@@ -172,8 +122,7 @@ $(function() {
     return false;
   });
 
-  $('#methods #method1').on('click', function() {
-    callSegmentation(document.getElementById('sensors').value,0.8);
+  $('#methods #method1').on('click', function() {    callSegmentation(document.getElementById('sensors').value,0.8);
     return false;
   });  
 
@@ -192,7 +141,7 @@ $(function() {
     return false;
   });  
 
-  $('#parameters form').submit(function(e){ 
+  $('#parameters form').submit(function(e) { 
     var sensor = document.getElementById('sensors').value 
     var t1 = getDateTimeInput('#t1');
     var t2 = getDateTimeInput('#t2');
@@ -201,3 +150,4 @@ $(function() {
     plotSensorData(318772,t1,t2,graph2);
     return false
   });
+})
