@@ -7,22 +7,10 @@ block content
       h1 PowerHouse
       p Online CommonSense power monitoring platform.
 
-    //- #howto.row-fluid
-    //-   h2 How does it work
-    //-   p Lalalajkaf 
-
-    //-   ui.nav.nav-list
-    //-     li.divider
-  .container-fluid.border(style="background-color:white;padding-top:25px;padding-left:40px;padding-right:40px;border-radius:5pxheroh")
+  .container-fluid.border(style="background-color:white;padding-top:25px;padding-left:40px;padding-right:40px;border-radius:5px")
     #parameters.row-fluid
       h2#parameters Parameters
       form
-        //- .span3
-        //-   select.span12
-        //-     option(value='pizza') No sensors
-        //-     option(value='salad') Salad
-        //-     option(value='pizzasalad') Pizza and Salad
-        //- .span3
         //-   #sensors.btn-group
         //-     button.btn.dropdown-toggle(data-toggle="dropdown")
         //-       | Sensor
@@ -49,56 +37,6 @@ block content
     #singinalert.alert.alert-error(style='display:none;')
       strong Error!
       |  You are not signed in.
-      //- .container
-      //-   h2 Parameters
-      //- #authenticate.span4
-      //-   //- h2 User
-      //-   //- p The first step is to authenticate yourself.
-      //-   //- form.form-vertical
-      //-   //-   .control-group
-      //-   //-     .controls
-      //-   //-       input#username(type="text", placeholder="Username")
-      //-   //-   .control-group
-      //-   //-     .controls
-      //-   //-       input#password(type="password", placeholder="Password")
-      //-   //-   .control-group
-      //-   //-     .controls
-      //-   //-       button.btn(type="submit") Authenticate
-      //- #sensors.span4
-      //-   h2 Sensors
-      //-   p Please select the sensor you wish to inspect.
-      //-   form
-      //-     .btn-group
-      //-       button.btn.dropdown-toggle(data-toggle="dropdown")
-      //-         | Sensor
-      //-         &nbsp;
-      //-         span.caret
-      //-       ul.dropdown-menu
-      //-         li
-      //-           a No sensors
-
-      //- #datetime.span4
-      //-   h2 Date & Time
-      //-   p Now its time to select the timeframe of your plot.
-      //-   form.form-vertical(action='')
-      //-       fieldset
-      //-         .control-group
-      //-           .controls.input-append.date.form_datetime(data-link-field='dtp_input1')
-      //-             input#t1(size='16', type='text', value='', placeholder='2013-01-01 00:00')
-      //-             span.add-on
-      //-               i.icon-th
-      //-           input#dtp_input1(type='hidden', value='')
-      //-           br
-      //-         .control-group
-      //-           .controls.input-append.date.form_datetime(data-link-field='dtp_input2')
-      //-             input#t2(size='16', type='text', value='', placeholder='2013-01-01 00:00')
-      //-             span.add-on
-      //-               i.icon-th
-      //-           input#dtp_input1(type='hidden', value='')
-      //-           br
-      //-         .control-group
-      //-           .controls
-      //-             button.btn(type="submit") Plot Data
     
     ui.nav.nav-list
       li.divider

@@ -4,7 +4,10 @@
         todayBtn:  1,
 		autoclose: 1,
 		todayHighlight: 1,
-		startView: 2,
+		startView: 1,
 		forceParse: 0,
-        showMeridian: 1
+        showMeridian: 0,
+        minuteStep: 15,
+        pickerPosition: 'bottom-left',
     });
+

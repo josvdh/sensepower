@@ -45,8 +45,11 @@ retrieveSensorTimespan = function(id, cb) {
   });
 };
 
-plotSensorData = function(id,t1,t2,graph,unit,color) {
-  return sense.sensorData(id, {start_date:t1, end_date:t2, interval:10, per_page:1000}, function(err, resp) {
+plotSensorData = function(id,t1,t2,graph) {
+  var samples = 1000;
+  var st = Math.ceil((t2-t1)/samples);
+  console.log(st);
+  return sense.sensorData(id, {start_date:t1, end_date:t2, interval:st, per_page:samples}, function(err, resp) {
     var data, datum, _i, _len, _ref;
     data = [];  
     _ref = resp.object.data;
@@ -59,14 +62,12 @@ plotSensorData = function(id,t1,t2,graph,unit,color) {
     }
     graph.draw([
       {
-        label: unit,
+        label: 'sensordata',
         data: data
       }
     ],
       {
-        line : {
-          color: color
-        },
+        // line : {color: color},
         min: t1*1000, 
         max: t2*1000,
         legend : {
@@ -160,8 +161,8 @@ $(function() {
     var t1 = getDateTimeInput('#t1');
     var t2 = getDateTimeInput('#t2');
     console.log("parameters submitted:",t1,t2);
-    plotSensorData(328204,t1,t2,graph1,'Power','red');
-    plotSensorData(318772,t1,t2,graph2,'Temperature','blue');
+    plotSensorData(328204,t1,t2,graph1);
+    plotSensorData(318772,t1,t2,graph2);
     return false
   });
 
