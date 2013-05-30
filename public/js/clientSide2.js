@@ -18,6 +18,41 @@ checkForSenseSession = function() {
   }
 };
 
+showSensors = function() {
+  console.log("ikben hier");
+  return sense.sensors(function(err, resp) {
+    var select = document.getElementById('sensors');
+    select.options.length = 0; // clear out existing items
+    for(var i=0; i < resp.object.sensors.length; i++) {
+        var sensor = resp.object.sensors[i];
+        select.options.add(new Option(sensor.display_name,sensor.id));
+    };
+  });
+};
+
+// showSensors = function(device, list, cb) {
+//   if (typeof list === 'function') {
+//     cb = list;
+//     list = null;
+//   }
+//   list || (list = '#sensors ul');
+//   return sense.deviceSensors(device, function(err, resp) {
+//     var list_html, sensor, sorted_sensors, _i, _len;
+//     sorted_sensors = resp.object.sensors.sortBy(function(sensor) {
+//       return sensor.display_name;
+//     });
+//     list_html = '';
+//     for (_i = 0, _len = sorted_sensors.length; _i < _len; _i++) {
+//       sensor = sorted_sensors[_i];
+//       list_html += "<li><a href='' data-id='" + sensor.id + "' data-display='" + sensor.display_name + "'>" + sensor.display_name + " (" + sensor.id + ")</a></li>";
+//     }
+//     $(list).html(list_html);
+//     if (cb != null) {
+//       return cb();
+//     }
+//   });
+// };
+
 retrieveSensorTimespan = function(id, cb) {
   var first_datapoint_call, last_datapoint_call;
   first_datapoint_call = function() {
@@ -138,12 +173,12 @@ $(function() {
   });
 
   $('#methods #method1').on('click', function() {
-    callSegmentation(328204,0.8);
+    callSegmentation(document.getElementById('sensors').value,0.8);
     return false;
   });  
 
   $('#methods #method2').on('click', function() {
-    callSegmentation(328204,1.2);
+    callSegmentation(document.getElementById('sensors').value,1.2);
     return false;
   });  
 
@@ -157,20 +192,12 @@ $(function() {
     return false;
   });  
 
-  $('#parameters form').submit(function(e){  
+  $('#parameters form').submit(function(e){ 
+    var sensor = document.getElementById('sensors').value 
     var t1 = getDateTimeInput('#t1');
     var t2 = getDateTimeInput('#t2');
-    console.log("parameters submitted:",t1,t2);
-    plotSensorData(328204,t1,t2,graph1);
+    console.log("parameters submitted:",t1,t2,sensor);
+    plotSensorData(sensor,t1,t2,graph1);
     plotSensorData(318772,t1,t2,graph2);
     return false
   });
-
-  return $('.dropdown-menu').on('click', 'a', function(e) {
-    var button, button_childs;
-    button = $(this).closest('.btn-group').removeClass('open').find('button');
-    button_childs = button.find('*');
-    button.text($(this).data('display') + ' ').append(button_childs);
-    return button.data('id', $(this).data('id'));
-  });
-});

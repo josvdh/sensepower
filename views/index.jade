@@ -11,14 +11,9 @@ block content
     #parameters.row-fluid
       h2#parameters Parameters
       form
-        //-   #sensors.btn-group
-        //-     button.btn.dropdown-toggle(data-toggle="dropdown")
-        //-       | Sensor
-        //-       &nbsp;
-        //-       span.caret
-        //-     ul.dropdown-menu
-        //-        li
-        //-          a No sensors
+        .span3
+          select#sensors
+            option
         .span3
           .controls.input-append.date.form_datetime(data-link-field='dtp_input1')
             input#t1(size='16', type='text', value='', placeholder='2013-01-01 00:00')
@@ -34,9 +29,9 @@ block content
         .span3
           button.btn.btn-primary(type="submit") Plot Data
 
-    #singinalert.alert.alert-error(style='display:none;')
-      strong Error!
-      |  You are not signed in.
+    //- #singinalert.alert.alert-error(style='display:none;')
+    //-   strong Error!
+    //-   |  You are not signed in.
     
     ui.nav.nav-list
       li.divider
@@ -45,9 +40,6 @@ block content
       h2#power Power
       #graph_container1
     
-    //- ui.nav.nav-list
-    //-   li.divider
-
     #visualisation2.row-fluid
       h2#temperature Temperature
       #graph_container2
