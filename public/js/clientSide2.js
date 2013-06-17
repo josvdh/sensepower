@@ -19,7 +19,6 @@ checkForSenseSession = function() {
 };
 
 showSensors = function() {
-  console.log("ikben hier");
   return sense.sensors(function(err, resp) {
     var select = document.getElementById('sensors');
     select.options.length = 0; // clear out existing items
