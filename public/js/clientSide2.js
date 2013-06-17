@@ -53,7 +53,9 @@ plotSensorData = function(id,t1,t2,graph) {
     ],
       {
         // line : {color: color},
-        min: t1*1000, 
+        start: t1*1000,
+        end: t2*1000,
+        min: t1*1000,
         max: t2*1000,
         legend : {
           width: "130px"
